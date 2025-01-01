@@ -20,18 +20,18 @@
       </nav>
 
       <div class="mx-4">
-        <h2 class="title is-3 mx-4">Bank account overview: {{ account.name }}</h2>
+        <h2 class="title is-3 mx-4">Bank account overview: {{ accountStore.balanceAccount.name }}</h2>
 
         <div class="details columns">
           <div class="column is-half mx-4">
             <div class="content">
               <h2 class="title is-4">Details</h2>
               <p class="subtitle is-6">
-                <strong>IBAN:</strong> {{ account.iban }}<br>
-                <strong>Owner:</strong> {{ account.ownerName }}<br>
-                <strong>Currency</strong> {{ account.currency }}<br>
-                <strong>Product:</strong> {{ account.product }}<br>
-                <strong>Type:</strong> {{ account.cashAccountType }}
+                <strong>IBAN:</strong> {{ accountStore.balanceAccount.iban }}<br>
+                <strong>Owner:</strong> {{ accountStore.balanceAccount.ownerName }}<br>
+                <strong>Currency</strong> {{ accountStore.balanceAccount.currency }}<br>
+                <strong>Product:</strong> {{ accountStore.balanceAccount.product }}<br>
+                <strong>Type:</strong> {{ accountStore.balanceAccount.cashAccountType }}
               </p>
             </div>
           </div>
@@ -40,7 +40,7 @@
             <div class="content">
               <p class="is-size-4 has-text-weight-bold mb-0">Balance</p>
               <h2 class="is-4 mt-0">
-                {{ balances[1]?.balanceAmount.amount }} {{ balances[1]?.balanceAmount.currency }}
+                {{ accountStore.balances[1]?.balanceAmount.amount }} {{ accountStore.balances[1]?.balanceAmount.currency }}
               </h2>
             </div>
           </div>
@@ -61,14 +61,14 @@
               </tr>
             </thead>
 
-            <tbody v-if="balances.length > 0">
+            <tbody v-if="accountStore.balances.length > 0">
               <tr>
-                <td>{{ account.name }}</td>
-                <td>{{ account.iban }}</td>
-                <td>{{ balances[1].balanceAmount.amount }} {{ balances[1].balanceAmount.currency }}</td>
-                <td> {{ balances[1].balanceAmount.amount-balances[0].balanceAmount.amount }} {{ balances[0].balanceAmount.currency }}</td>
-                <td>{{ balances[0].balanceAmount.amount }} {{ balances[0].balanceAmount.currency }}</td>
-                <td>{{ balances[0].referenceDate }}</td>
+                <td>{{ accountStore.balanceAccount.name }}</td>
+                <td>{{ accountStore.balanceAccount.iban }}</td>
+                <td>{{ accountStore.balances[1].balanceAmount.amount }} {{ accountStore.balances[1].balanceAmount.currency }}</td>
+                <td> {{ accountStore.balances[1].balanceAmount.amount-accountStore.balances[0].balanceAmount.amount }} {{ accountStore.balances[0].balanceAmount.currency }}</td>
+                <td>{{ accountStore.balances[0].balanceAmount.amount }} {{ accountStore.balances[0].balanceAmount.currency }}</td>
+                <td>{{ accountStore.balances[0].referenceDate }}</td>
               </tr>
             </tbody>
           </table>
@@ -96,9 +96,6 @@
 
   const toast = useToast() 
 
-  const balances = ref([])
-  const account = ref({})
-
   const noConsents = ref(false)
   const errorMessage = ref('')
   
@@ -122,9 +119,7 @@ const getAccount = async (accountId) => {
     try {
       const token = Cookies.get('token')
 
-      const accountDetails = await accountStore.getAccount(token, accountId)
-
-      account.value = accountDetails.account;
+      await accountStore.getAccount(token, accountId)
 
       return;
     } catch (error) {
@@ -143,9 +138,7 @@ const getAccountBalance = async (accountId) => {
   try {
     const token = Cookies.get('token')
 
-    const accountBalance = await accountStore.getAccountBalance(token, accountId)
-
-    balances.value = accountBalance.balances
+    await accountStore.getAccountBalance(token, accountId)
 
     return;
   } catch (error) {

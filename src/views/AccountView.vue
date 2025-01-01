@@ -33,7 +33,7 @@
           </tr>
         </thead>
 
-        <tbody v-for="account in accountStore.accounts" :key="account.resourceId">
+        <tbody v-for="account in accountStore.allAccounts" :key="account.resourceId">
 
           <!-- Account Row -->
           <tr>

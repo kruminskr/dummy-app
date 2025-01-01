@@ -26,13 +26,13 @@
       <div class="details mx-4 pb-3">
         <h2 class="title is-5 mb-1">Account</h2>
         <p>
-          <strong>IBAN:</strong> {{ account.iban }}<br>
-          <strong>Owner:</strong> {{ account.ownerName }}
+          <strong>IBAN:</strong> {{ store.transactionAccount.iban }}<br>
+          <strong>Owner:</strong> {{ store.transactionAccount.ownerName }}
         </p>
       </div>
 
       <div class="transaction-table mx-4">
-        <table v-if="transactions.pending || transactions.booked" class="table is-fullwidth">
+        <table v-if="store.transactions.pending || store.transactions.booked" class="table is-fullwidth">
           <thead>
             <tr>
               <th>
@@ -59,7 +59,7 @@
             </tr>
           </thead>
 
-          <tbody v-for="transaction in [...(transactions.pending || []), ...(transactions.booked || []) ]" :key="transaction.transactionId">
+          <tbody v-for="transaction in [...(store.transactions.pending || []), ...(store.transactions.booked || []) ]" :key="transaction.transactionId">
             <tr class="is-clickable" @click="toggleDropdown(transaction.transactionId)">
               <td>
                 {{ transaction.transactionDate }}
@@ -71,7 +71,7 @@
                 {{ transaction.transactionAmount.currency }}
               </td>
               <td class="has-text-centered">
-                <span class="has-text-warning" v-if="(transactions.pending || []).includes(transaction)">
+                <span class="has-text-warning" v-if="(store.transactions.pending || []).includes(transaction)">
                   Pending
                 </span>
                 <span class="has-text-success" v-else>
@@ -144,9 +144,6 @@ const router = useRouter()
 const store = useAccountStore()
 
 const toast = useToast()
-
-const transactions = ref({})
-const account = ref({})
 
 const expandedRows = ref({});
 
@@ -241,18 +238,12 @@ const getAccountTransactions = async (dateFrom, dateTo, status, pageId = null) =
 
       const accountId = route.params.id
 
-      console.log('status', status)
-
       const accountTransactions = await store.getAccountTransactions(token, accountId, dateFrom, dateTo, status, pageId)
 
-      account.value = accountTransactions.account
-      transactions.value = accountTransactions.transactions
       pagination.value.nextPage = accountTransactions?._links?.nextPage.href || null
 
       return;
     } catch (error) {
-      console.log(error.response.data[0].code)
-
       if (error.response.data[0].code == 'ACCESS_EXCEEDED') {
         noConsents.value = true
 
@@ -268,7 +259,11 @@ onMounted(async () => {
   const token = Cookies.get('token')
 
   if (!token) {
-    router.push('/')
+    logout()
+  }
+
+  if (store.transactionAccount.iban) {
+    return;
   }
 
   getAccountTransactions(dateFrom.value, dateTo.value, status.value)

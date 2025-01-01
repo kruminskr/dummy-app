@@ -4,7 +4,13 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const useAccountStore = defineStore('accounnt', () => {
-    const accounts = ref([])
+    const allAccounts = ref([])
+
+    const balanceAccount = ref({})
+    const balances = ref([])
+
+    const transactionAccount = ref({})
+    const transactions = ref({}) 
 
     const getAccounts = async (token) => {
           const headers = {
@@ -13,7 +19,7 @@ const useAccountStore = defineStore('accounnt', () => {
       
           const {data} = await axios.get('http://localhost:3000/api/app/accounts', { headers })
       
-          return accounts.value = data.accounts
+          return allAccounts.value = data.accounts
       }
       
     const getAccount = async (token, accountId) => {
@@ -22,6 +28,8 @@ const useAccountStore = defineStore('accounnt', () => {
           }
       
           const { data } = await axios.get(`http://localhost:3000/api/app/accounts/${accountId}`, { headers })
+
+          balanceAccount.value = data.account;
 
           return data;
     }
@@ -32,6 +40,8 @@ const useAccountStore = defineStore('accounnt', () => {
           }
       
           const { data } = await axios.get(`http://localhost:3000/api/app/accounts/${accountId}/balance`, { headers })
+
+          balances.value = data.balances
 
           return data;
     }
@@ -49,12 +59,19 @@ const useAccountStore = defineStore('accounnt', () => {
           }
     
           const { data } = await axios.post(`http://localhost:3000/api/app/accounts/${accountId}/transactions`, body, { headers })
-      
+
+          transactionAccount.value = data.account
+          transactions.value = data.transactions
+
           return data;
       }
 
     return {
-        accounts,
+        allAccounts,
+        balances,
+        balanceAccount,
+        transactionAccount,
+        transactions,
         getAccounts,
         getAccount,
         getAccountBalance,
