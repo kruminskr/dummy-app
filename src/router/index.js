@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import LoginView from '../views/LoginView.vue'
+import AuthView from '../views/AuthView.vue'
 import AccountView from '../views/AccountView.vue'
 import BalanceView from '../views/BalanceView.vue'
 import TransactionsView from '../views/TransactionsView.vue'
@@ -11,6 +12,11 @@ const routes = [
     path: '/',
     name: 'Login page',
     component: LoginView,
+  },
+  {
+    path: '/auth',
+    name: 'Decoupled auth view',
+    component: AuthView,
   },
   {
     path: '/account',
