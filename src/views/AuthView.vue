@@ -1,7 +1,7 @@
 <template>
 <div class="columns is-gapless">
     <!-- Left Side -->
-    <div class="column is-half is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+    <div v-if="!store.authData.authorizeId" class="column is-half is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
       <h1 class="title is-2">{{ store.method.authenticationType }}  authentication</h1>
       
       <div class="">
@@ -38,6 +38,10 @@
       </div>
     </div>
 
+    <div v-if="store.authData.authorizeId" class="column is-half is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+      <AuthStatus :userId ="userId" />
+    </div>
+
     <!-- Right Side -->
     <div class="column is-half">
       <img src="../assets/img/login-bg.jpg" alt="Login Background" class="image is-fullwidth is-fullheight"/>
@@ -52,6 +56,8 @@ import { useRouter  } from 'vue-router'
 
 import axios from 'axios';
 import Cookies from 'js-cookie'
+
+import AuthStatus from '../components/AuthStatus.vue';
 
 import useAuthStore from '../stores/auth';
 
@@ -83,15 +89,17 @@ const decoupledAuth = async (userId, personalCode, phoneNumber) => {
         [personalCode ? 'personalCode' : 'phoneNumber']: personalCode || phoneNumber
     }
 
-    const { data } = await axios.post('http://localhost:3000/api/app/auth/decoupled', body)
+    const { data } = await axios.post('http://localhost:3000/api/app/auth/decoupled/start', body)
 
-    Cookies.set('token', data); 
+    store.authData = data;
 
-    router.push('/account')
+    // Cookies.set('token', data); 
+
+    // router.push('/account')
 
     return;
   } catch (error) {
-    toast.error(error.response.data[0].text || 'An error occurred')
+    toast.error(error?.response?.data[0].text || 'An error occurred')
     return;
   }
 }

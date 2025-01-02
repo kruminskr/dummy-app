@@ -4,9 +4,11 @@ import { defineStore } from 'pinia'
 
 const useAuthStore = defineStore('auth', () => {
     const method = ref({})
+    const authData = ref({})
 
     return {
-        method
+        method,
+        authData
     }    
 })
 
