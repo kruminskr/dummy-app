@@ -1,7 +1,7 @@
 <template>
-  <div class="modal is-active">
+  <div  class="modal is-active">
     <div class="modal-background"></div>
-    <div class="modal-card">
+    <div v-if="helperStore.viewConesntInfo" class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Consent limit reached</p>
       </header>
@@ -10,9 +10,37 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button mr-3" @click="redirectAccounts()">Go to Accounts</button>
-        <button class="button is-light" @click="createDetailedConsent()">Resign Consent</button>
+        <button class="button is-light" @click="goConsentMethods()">Resign Consent</button>
       </footer>
     </div>
+
+    <div v-if="helperStore.viewConsentMethods" class="modal-card">
+      <header class="modal-card-head"></header>
+      <section class="modal-card-body">
+        <ConsentMethods  :accountIBAN="accountIBAN" :accountId="accountId" />
+      </section>
+      <footer class="modal-card-foot">
+      </footer>
+    </div>
+
+    <div v-if="helperStore.viewConsentData" class="modal-card">
+      <header class="modal-card-head"></header>
+      <section class="modal-card-body">
+        <ConsentData  :accountId="accountId" />
+      </section>
+      <footer class="modal-card-foot">
+      </footer>
+    </div>
+
+    <div v-if="helperStore.viewConsentSign" class="modal-card">
+      <header class="modal-card-head"></header>
+      <section class="modal-card-body">
+        <ConsentSign :accountId="accountId" />
+      </section>
+      <footer class="modal-card-foot">
+      </footer>
+    </div>
+
   </div>
 </template>
 
@@ -20,17 +48,18 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import { defineProps } from 'vue';
-import Cookies from 'js-cookie';
-import { useToast } from 'vue-toastification';
 
-import useConsentStore from '../stores/consent';
+import ConsentMethods from './ConsentMethods.vue';
+import ConsentData from './ConsentData.vue';
+import ConsentSign from './ConsentSign.vue';
+
+import useHelperStore from '../stores/helper';
 
 const router = useRouter();
 const route = useRoute();
 
-const consentStore = useConsentStore();
+const helperStore = useHelperStore();
 
-const toast = useToast();
 
 const props = defineProps({
   message: {
@@ -43,6 +72,11 @@ const props = defineProps({
   },
 });
 
+const goConsentMethods = () => {
+    helperStore.viewConesntInfo = false;
+    helperStore.viewConsentMethods = true;
+}
+
 const redirectAccounts = () => {
   router.push('/account'); 
 };
@@ -53,43 +87,48 @@ const extractIban = (text) => {
   return match ? match[0] : null; 
 };
 
-const createDetailedConsent = async () => {
-  try {
-    const token = Cookies.get('token')
-    const accountId = route.params.id
+const accountId = route.params.id
+const accountIBAN = extractIban(props.message)
 
-    const accountIBAN = extractIban(props.message)
+// const createDetailedConsent = async () => {
+//   try {
+//     const token = Cookies.get('token')
+//     const accountId = route.params.id
 
-    const access = {
-      accounts: [
-      {
-        iban: accountIBAN
-      }
-      ],
-      balances: [
-        {
-          iban: accountIBAN
-        }
-      ],
-      transactions: [
-        {
-          iban: accountIBAN
-        }
-      ]
-    };
+//     const accountIBAN = extractIban(props.message)
 
-    const consent = await consentStore.createConsent(token, access, accountId)
+//     const access = {
+//       accounts: [
+//       {
+//         iban: accountIBAN
+//       }
+//       ],
+//       balances: [
+//         {
+//           iban: accountIBAN
+//         }
+//       ],
+//       transactions: [
+//         {
+//           iban: accountIBAN
+//         }
+//       ]
+//     };
 
-    Cookies.set('token', consent.token); 
+//     const consent = await consentStore.createConsent(token, access, accountId)
 
-    return window.location.href = consent._links.scaRedirect.href;
-  } catch (error) {
-    toast.error(error?.response?.data[0].text || error)
-  }
-}
+//     Cookies.set('token', consent.token); 
+
+//     return window.location.href = consent._links.scaRedirect.href;
+//   } catch (error) {
+//     toast.error(error?.response?.data[0].text || error)
+//   }
+// }
+
+// onMounted(() => {
+//   const accountId = route.params.id
+
+//   const accountIBAN = extractIban(props.message)
+// })
 </script>
-  
-<style scoped>
-
-</style>
   
