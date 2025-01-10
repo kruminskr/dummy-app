@@ -64,8 +64,6 @@ const redirectConsent = async () => {
   try {
     const token = Cookies.get('token')
 
-
-
     const access = {
       accounts: [{ iban: iban }],
       balances: [{ iban: iban }],

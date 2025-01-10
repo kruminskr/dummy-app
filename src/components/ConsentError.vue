@@ -89,46 +89,5 @@ const extractIban = (text) => {
 
 const accountId = route.params.id
 const accountIBAN = extractIban(props.message)
-
-// const createDetailedConsent = async () => {
-//   try {
-//     const token = Cookies.get('token')
-//     const accountId = route.params.id
-
-//     const accountIBAN = extractIban(props.message)
-
-//     const access = {
-//       accounts: [
-//       {
-//         iban: accountIBAN
-//       }
-//       ],
-//       balances: [
-//         {
-//           iban: accountIBAN
-//         }
-//       ],
-//       transactions: [
-//         {
-//           iban: accountIBAN
-//         }
-//       ]
-//     };
-
-//     const consent = await consentStore.createConsent(token, access, accountId)
-
-//     Cookies.set('token', consent.token); 
-
-//     return window.location.href = consent._links.scaRedirect.href;
-//   } catch (error) {
-//     toast.error(error?.response?.data[0].text || error)
-//   }
-// }
-
-// onMounted(() => {
-//   const accountId = route.params.id
-
-//   const accountIBAN = extractIban(props.message)
-// })
 </script>
   

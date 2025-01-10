@@ -55,35 +55,5 @@ const goConsentMethods = () => {
     helperStore.viewConsentMethods = true;
 }
 
-// const redirectConsent = async (account) => {
-//   try {
-//     const token = Cookies.get('token')
-
-//     console.log('account', account)
-
-//     const access = {};
-//     if (consentOptions.value.account) {
-//       access.accounts = [{ iban: account.iban }];
-//       access.balances = [{ iban: account.iban }];
-//       access.transactions = [{ iban: account.iban }];
-//     }
-//     if (consentOptions.value.transactionsOver90Days) {
-//       access.transactionsOver90Days = [{ iban: account.iban }];
-//     }
-
-//     if (Object.keys(access).length === 0) {
-//       toast.warning('No consent options selected')
-//       return;
-//     }
-
-//     const consent = await consentStore.createConsent(token, access, account.resourceId)
-
-//     Cookies.set('token', consent.token); 
-
-//     return window.location.href = consent._links.scaRedirect.href;
-//   } catch (error) {
-//     toast.error(error.response.data[0].text || 'An error occurred')
-//   }
-// }
 </script>
 

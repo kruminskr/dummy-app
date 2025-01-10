@@ -93,10 +93,6 @@ const decoupledAuth = async (userId, personalCode, phoneNumber) => {
 
     store.authData = data;
 
-    // Cookies.set('token', data); 
-
-    // router.push('/account')
-
     return;
   } catch (error) {
     toast.error(error?.response?.data[0].text || 'An error occurred')

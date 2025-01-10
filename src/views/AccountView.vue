@@ -53,9 +53,51 @@
           <tr v-if="helperStore.expandedRows[account.resourceId]">
             <td colspan="6" class="dropdown-container">
               <ConsentInfo v-if="helperStore.viewConesntInfo" :account="account" />
-              <ConsentMethods v-if="helperStore.viewConsentMethods" :account="account" class="active" />
-              <ConsentData v-if="helperStore.viewConsentData" :account="account" class="active" />
-              <ConsentSign v-if="helperStore.viewConsentSign" :account="account" class="active"/>
+
+              <div v-if="helperStore.viewConsentMethods">
+                <div  class="modal is-active">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <section class="modal-card-body">
+                      <ConsentMethods :account="account" class="active" />
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="helperStore.viewConsentMethods">
+                <div  class="modal is-active">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <section class="modal-card-body">
+                      <ConsentMethods  :account="account" class="active" />
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="helperStore.viewConsentData">
+                <div  class="modal is-active">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <section class="modal-card-body">
+                      <ConsentData  :account="account" class="active" />
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="helperStore.viewConsentSign">
+                <div  class="modal is-active">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <section class="modal-card-body">
+                      <ConsentSign  :account="account" class="active"/>
+                    </section>
+                  </div>
+                </div>
+              </div>
+
             </td>
           </tr>
 
@@ -71,7 +113,7 @@
 
 <script setup>
 import { useRouter, useRoute  } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import Cookies from 'js-cookie'
 import { useToast } from "vue-toastification";
 
