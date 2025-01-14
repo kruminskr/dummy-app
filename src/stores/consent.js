@@ -3,12 +3,14 @@ import { defineStore } from 'pinia'
 
 import axios from 'axios'
 
+// Consent store to manage the state of consent data and handle comunication with the backend
 const useConsentStore = defineStore('consent', () => {
     const avaliableMethods = ref([])
     const chosenMethod = ref({})
     const authorisationId = ref({})
     const scaData = ref({})
 
+    // Creates consent for the given access data
     const createConsent = async (token, access, accountId = '') => {
 
         const headers = {
@@ -40,6 +42,7 @@ const useConsentStore = defineStore('consent', () => {
         return data
     }
 
+    // initates decoupled consent process
     const decoupledConsent = async (token, access, accountId) => {
         const headers = {
             'Authorization': token
@@ -70,6 +73,7 @@ const useConsentStore = defineStore('consent', () => {
         return data
     }
 
+    // Start decoupled consent signing
     const startSCA = async (token, psuData, accountId) => {
         const headers = {
             'Authorization': token
@@ -91,6 +95,7 @@ const useConsentStore = defineStore('consent', () => {
         return data;
     }
 
+    // Check the status of the decoupled consent signing
     const checkScaStatus = async (token, accountId) => {
         const headers = {
             'Authorization': token

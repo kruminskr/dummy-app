@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
+// Helper store to manage the state of the consent components
 const useHelperStore = defineStore('helper', () => {
     const expandedRows = ref({});
     const viewConesntInfo = ref(true);

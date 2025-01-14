@@ -1,6 +1,9 @@
+<!-- Choose country and authetication method -->
 <template>
   <div class="columns is-gapless">
+
     <!-- Left Side -->
+    <!-- Choose country -->
     <div class="column is-half is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
       <h1 class="title is-2">Financial managment system</h1>
 
@@ -19,14 +22,19 @@
         </div>
       </div>
 
-      <div v-if="displayMethods" class="is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
-        <div v-for="method in methods" :key="method.authenticationMethodId" class="m-2">
-          <button @click="method.redirectAuth ? redirectAuth() : goDecoupledAuth(method)" class="button">
-            {{ method.authenticationType }}
-          </button>
+      <!-- Choose authentication method -->
+      <div v-if="displayMethods">
+        <div class="is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
+          <div v-for="method in methods" :key="method.authenticationMethodId" class="m-2">
+            <button @click="method.redirectAuth ? redirectAuth() : goDecoupledAuth(method)" class="button">
+              {{ method.authenticationType }}
+            </button>
+          </div>
+        </div>
+        <div class="is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
+          <button @click="displayCountries()" class="button is-light mt-4">Back</button>
         </div>
       </div>
-
     </div>
 
     <!-- Right Side -->
@@ -54,6 +62,7 @@ const displayMethods = ref(false)
 const methods = ref([])
 const bic = ref('')
 
+// starts authentication process and redirects user to swedbank UI
 const redirectAuth = () => {
   window.location.href = `http://localhost:3000/api/app/auth/redirect`;
 };
@@ -63,6 +72,11 @@ const goDecoupledAuth = async (method) => {
   router.push('/auth')
 }
 
+const displayCountries = () => {
+  displayMethods.value = false;
+}
+
+// Asign which are decoupled and which are redirect auth methods
 const filterMethods = async () => {
   methods.value = methods.value
     .filter(method => method.authenticationType !== "Biometrics") 
@@ -77,6 +91,7 @@ const filterMethods = async () => {
     });
 }
 
+// Get authentication methods for selected country
 const getAuthMethods = async (country) => {
   try {
     bic.value = country;

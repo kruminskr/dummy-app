@@ -1,3 +1,4 @@
+<!-- Not found view -->
 <template>
     <section class="hero is-info is-large">
         <div class="hero-head">

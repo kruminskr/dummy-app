@@ -30,6 +30,7 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
+// Retrives fresh token from the backends
 const getRefreshToken = async () => {
     try {
       const token = Cookies.get('token')
@@ -47,12 +48,13 @@ const getRefreshToken = async () => {
     }
   }
 
-  axios.interceptors.response.use(
+// handles situation when access token is expired
+axios.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response?.data[0].code === 'TOKEN_INVALID') {
+        if (error.response?.data[0]?.code === 'TOKEN_INVALID') {
             if (!isRefreshing) {
                 isRefreshing = true;
 

@@ -1,3 +1,4 @@
+<!-- Inform user about the need to sign consents -->
 <template>
     <div>
         <!-- Explanation Section -->
@@ -20,8 +21,6 @@
         <!-- Actions -->
         <button class="button mt-3 mr-2" @click="helperStore.toggleDropdown(account.resourceId)">Cancel</button>
         <button class="button is-light mt-3" @click="goConsentMethods()" :disabled="!hasSelectedConsentOptions">Continue</button>
-
-        <!-- <button class="button is-light mt-3" @click="redirectConsent(account)" :disabled="!hasSelectedConsentOptions">Confirm Consent</button> -->
     </div>
 </template>
 

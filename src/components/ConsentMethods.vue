@@ -1,8 +1,8 @@
+<!-- Display avaliable consent signing methods in country -->
 <template>
     <div class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
       <h1 class="title is-5">Consent signing Methods</h1>
   
-      <!-- Buttons for SCA Methods -->
       <div class="is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
         <div  v-for="method in consentStore.avaliableMethods.value" :key="method.authenticationMethodId" class="has-text-centered px-3">
           <button class="button is-grey" @click="method.redirectAuth ? redirectConsent() : goDecoupledConesntSign(), consentStore.chosenMethod = method">
@@ -10,6 +10,9 @@
           </button>
         </div>
       </div>
+
+      <button class="button is-light mt-4" @click="cancleConsentSigning()">Cancel</button>
+
     </div>
 </template>
 
@@ -47,6 +50,7 @@ const goDecoupledConesntSign = () => {
     helperStore.viewConsentData = true;
 }
 
+// Asign which are decoupled and which are redirect signing methods
 const filterSigningMethods = (methods) => {
   return methods
     .filter(method => method.authenticationType !== "Biometrics") 
@@ -60,6 +64,15 @@ const filterSigningMethods = (methods) => {
     });
 };
 
+const cancleConsentSigning = () => {
+  helperStore.viewConesntInfo = true;
+  helperStore.viewConsentMethods = false;
+  helperStore.viewConsentData = false;
+  helperStore.viewConsentSign = false;
+  helperStore.expandedRows = {};
+}
+
+// Start redirect consent signing
 const redirectConsent = async () => {
   try {
     const token = Cookies.get('token')
@@ -80,6 +93,7 @@ const redirectConsent = async () => {
   }
 }
 
+// Get consent signing methods
 const decopoledConesnt = async (iban, accountId) => {
   try {
     const token = Cookies.get('token')

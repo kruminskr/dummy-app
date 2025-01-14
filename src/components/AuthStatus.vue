@@ -1,3 +1,5 @@
+<!-- Decoupled authentication -->
+<!-- Displays authetication method, message from Swedbank and challenge code -->
 <template>
     <div>
         <div class="has-text-centered">
@@ -15,8 +17,6 @@ import { useToast } from "vue-toastification";
 import { useRouter  } from 'vue-router'
 import Cookies from 'js-cookie'
 
-import axios from 'axios';
-
 import useAuthStore from '../stores/auth';
 
 const router = useRouter();
@@ -31,22 +31,23 @@ const props = defineProps({
 
 const store = useAuthStore()
 
+// Get decoupled authentication status, when successful, redirect to account page
 const decoupledAuthStatus = async () => {
   try {
-    const body = {
-        authId: store.authData.authorizeId,
-        userId: props.userId,
-    }
+    const authId = store.authData.authorizeId
+    const userId = props.userId
 
-    const { data } = await axios.post('http://localhost:3000/api/app/auth/decoupled/status', body)
+    const token = await store.getDecoupledAuthStatus(authId, userId)
 
-    Cookies.set('token', data); 
+    Cookies.set('token', token); 
 
     router.push('/account')
 
     return;
   } catch (error) {
-    toast.error(error?.response?.data[0].text || 'An error occurred')
+    toast.error(error?.response?.data[0].text || error.response.data)
+
+    router.push('/')
     return;
   }
 }

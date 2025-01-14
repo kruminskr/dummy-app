@@ -1,3 +1,5 @@
+<!-- Decoupled consent signing -->
+<!-- Displays consent signing method, message from Swedbank and challenge code -->
 <template>
     <div class="container is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
       <div class="has-text-centered">
@@ -69,7 +71,13 @@ const checkScaStatus = async () => {
 
     return;
   } catch (error) {
-    toast.error(error?.response?.data[0].text || error.message)
+    helperStore.viewConesntInfo = true;
+    helperStore.viewConsentMethods = false;
+    helperStore.viewConsentData = false;
+    helperStore.viewConsentSign = false;
+    helperStore.expandedRows = {};
+    
+    toast.error(error?.response?.data[0].text || error.response.data)
   }
 }
 

@@ -1,3 +1,4 @@
+<!-- Displays all user accounts -->
 <template>
   <div class="accounts" :class="{ 'blured': helperStore.viewConsentMethods || helperStore.viewConsentData || helperStore.viewConsentSign }">
 
@@ -52,55 +53,53 @@
           <!-- Dropdown -->
           <tr v-if="helperStore.expandedRows[account.resourceId]">
             <td colspan="6" class="dropdown-container">
+              <!-- warning about the need to sign consent -->
               <ConsentInfo v-if="helperStore.viewConesntInfo" :account="account" />
 
+              <!-- Consent signing Methods -->
               <div v-if="helperStore.viewConsentMethods">
                 <div  class="modal is-active">
                   <div class="modal-background"></div>
                   <div class="modal-card">
+                    <header class="modal-card-head"></header>
                     <section class="modal-card-body">
                       <ConsentMethods :account="account" class="active" />
                     </section>
+                    <footer class="modal-card-foot"></footer>
                   </div>
                 </div>
               </div>
 
-              <div v-if="helperStore.viewConsentMethods">
-                <div  class="modal is-active">
-                  <div class="modal-background"></div>
-                  <div class="modal-card">
-                    <section class="modal-card-body">
-                      <ConsentMethods  :account="account" class="active" />
-                    </section>
-                  </div>
-                </div>
-              </div>
-
+              <!-- Input user data -->
               <div v-if="helperStore.viewConsentData">
                 <div  class="modal is-active">
                   <div class="modal-background"></div>
                   <div class="modal-card">
+                    <header class="modal-card-head"></header>
                     <section class="modal-card-body">
                       <ConsentData  :account="account" class="active" />
                     </section>
+                    <footer class="modal-card-foot"></footer>
                   </div>
                 </div>
               </div>
 
+              <!-- Await consent signing status -->
               <div v-if="helperStore.viewConsentSign">
                 <div  class="modal is-active">
                   <div class="modal-background"></div>
                   <div class="modal-card">
+                    <header class="modal-card-head"></header>
                     <section class="modal-card-body">
                       <ConsentSign  :account="account" class="active"/>
                     </section>
+                    <footer class="modal-card-foot"></footer>
                   </div>
                 </div>
               </div>
 
             </td>
           </tr>
-
 
         </tbody>
       </table>
@@ -143,6 +142,7 @@ const logout = () => {
   router.push('/')
 }
 
+// Create consent for all accounts
 const createAllAccountConsent = async () => {
   try {
     const token = Cookies.get('token')
@@ -161,6 +161,7 @@ const createAllAccountConsent = async () => {
   }
 }
 
+// Get all accounts
 const getAccounts = async () => {
   try {
     await accountStore.getAccounts(allAccountToken)
@@ -174,6 +175,11 @@ const getAccounts = async () => {
 onMounted(async () => {
   if (!Cookies.get('token')) {
     const token = route.query.token;
+    
+    if (!token) {
+      router.push('/')
+    }
+
     Cookies.set('token', token);  
   }
 

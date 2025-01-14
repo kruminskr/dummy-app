@@ -1,8 +1,10 @@
+<!-- Redirect consent signing -->
+<!-- Input user information, for conesnt signing -->
 <template>
     <div class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
         <h1 class="title is-5">{{ consentStore.chosenMethod.authenticationType }}</h1>
-      <!-- SCA Input Fields -->
-      <div v-if="consentStore.chosenMethod" class="mt-4">
+
+        <div v-if="consentStore.chosenMethod" class="mt-4">
         <div class="field">
           <div class="control">
             <input v-model="userId" class="input" type="text" placeholder="User ID"/>
@@ -74,8 +76,6 @@ const countries = [
 ];
 
 const goLoadingScreen = () => {
-  console.log('Loading screen')
-
   helperStore.viewConsentData = false;
   helperStore.viewConsentSign = true;
 }
@@ -86,6 +86,7 @@ const cancleConsentSign = (accountId) => {
   helperStore.viewConesntInfo = true;
 }
 
+// Starts consent signing process
 const startSCA = async (userId, personalCode, phoneNumber) => {
   try {
     const token = Cookies.get('token')
@@ -102,10 +103,11 @@ const startSCA = async (userId, personalCode, phoneNumber) => {
 
     return;
   } catch (error) {
-    toast.error(error.response.data[0].text || 'An error occurred')
+    toast.error(error?.response?.data[0].text || error.response.data)
   }
 }
 
+// Check if all input fields are filled and correct
 const submitForm = async () => {
   if (!userId.value || (!personalCode.value && !phoneNumber.value)) {
     toast.warning('Please enter all values.');

@@ -1,5 +1,8 @@
+<!-- Consent error, when consent limit is reached -->
 <template>
   <div  class="modal is-active">
+
+    <!-- Initial error message -->
     <div class="modal-background"></div>
     <div v-if="helperStore.viewConesntInfo" class="modal-card">
       <header class="modal-card-head">
@@ -14,6 +17,7 @@
       </footer>
     </div>
 
+    <!-- Avaliable signing methods -->
     <div v-if="helperStore.viewConsentMethods" class="modal-card">
       <header class="modal-card-head"></header>
       <section class="modal-card-body">
@@ -23,6 +27,7 @@
       </footer>
     </div>
 
+    <!-- Input user information -->
     <div v-if="helperStore.viewConsentData" class="modal-card">
       <header class="modal-card-head"></header>
       <section class="modal-card-body">
@@ -32,6 +37,7 @@
       </footer>
     </div>
 
+    <!-- Await consent status confirmation -->
     <div v-if="helperStore.viewConsentSign" class="modal-card">
       <header class="modal-card-head"></header>
       <section class="modal-card-body">
@@ -81,6 +87,7 @@ const redirectAccounts = () => {
   router.push('/account'); 
 };
 
+// Extract IBAN from error message
 const extractIban = (text) => {
   const ibanRegex = /\b[A-Z]{2}\d{2}[A-Z0-9]{1,30}\b/;
   const match = text.match(ibanRegex);

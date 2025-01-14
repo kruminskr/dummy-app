@@ -1,3 +1,4 @@
+<!-- View account transactions -->
 <template>
     <div class="balance">
 
@@ -23,6 +24,7 @@
     <div class="transactions mx-4">
       <h2 class="title is-3 mx-4 mb-2">Transaction overview</h2>
 
+      <!-- Account details -->
       <div class="details mx-4 pb-3">
         <h2 class="title is-5 mb-1">Account</h2>
         <p>
@@ -31,8 +33,11 @@
         </p>
       </div>
 
+      <!-- Table -->
       <div class="transaction-table mx-4">
         <table v-if="store.transactions.pending || store.transactions.booked" class="table is-fullwidth">
+
+          <!-- Header -->
           <thead>
             <tr>
               <th>
@@ -60,6 +65,7 @@
           </thead>
 
           <tbody v-for="transaction in [...(store.transactions.pending || []), ...(store.transactions.booked || []) ]" :key="transaction.transactionId">
+            <!-- Transaction information -->
             <tr class="is-clickable" @click="toggleDropdown(transaction.transactionId)">
               <td>
                 {{ transaction.transactionDate }}
@@ -83,6 +89,7 @@
               </td>
             </tr>
 
+            <!-- Detailed transaction information -->
             <tr v-if="expandedRows[transaction.transactionId]" class="expanded-row">
               <td colspan="5">
                 <h2 class="title is-5 mb-1">Transaction details</h2>
@@ -232,6 +239,7 @@ const redirectBalance = () => {
   router.push(`/account/${accountId}/balance`)
 }
 
+// Get account transactions
 const getAccountTransactions = async (dateFrom, dateTo, status, pageId = null) => {
     try {
       const token = Cookies.get('token')

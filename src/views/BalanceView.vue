@@ -1,3 +1,4 @@
+<!-- Displays information abbout account -->
 <template>
     <div class="balance">
 
@@ -19,6 +20,7 @@
         </div>
       </nav>
 
+      <!-- Displays account information -->
       <div class="mx-4">
         <h2 class="title is-3 mx-4">Bank account overview: {{ accountStore.balanceAccount.name }}</h2>
 
@@ -44,9 +46,9 @@
               </h2>
             </div>
           </div>
-
         </div>
 
+        <!-- Displays account balance -->
         <div class="balance mx-4 mt-4">
           <h2 class="title is-4 mb-1 mt-4">Balance overview</h2>
           <table class="table is-fullwidth">
@@ -114,7 +116,7 @@
     router.push(`/account/${accountId}/transactions`)
   }
 
-
+// Get detailed account information
 const getAccount = async (accountId) => {
     try {
       const token = Cookies.get('token')
@@ -134,6 +136,7 @@ const getAccount = async (accountId) => {
     }
   }
 
+// Get account balance
 const getAccountBalance = async (accountId) => {
   try {
     const token = Cookies.get('token')

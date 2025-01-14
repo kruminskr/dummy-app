@@ -1,6 +1,9 @@
+<!-- Decoupled authentication -->
 <template>
-<div class="columns is-gapless">
+  <div class="columns is-gapless">
+
     <!-- Left Side -->
+    <!-- Allows user to input data -->
     <div v-if="!store.authData.authorizeId" class="column is-half is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
       <h1 class="title is-2">{{ store.method.authenticationType }}  authentication</h1>
       
@@ -38,6 +41,8 @@
       </div>
     </div>
 
+    <!-- Left side -->
+    <!-- Displays authentication status -->
     <div v-if="store.authData.authorizeId" class="column is-half is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
       <AuthStatus :userId ="userId" />
     </div>
@@ -50,11 +55,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useToast } from "vue-toastification";
 import { useRouter  } from 'vue-router'
-
-import axios from 'axios';
 import Cookies from 'js-cookie'
 
 import AuthStatus from '../components/AuthStatus.vue';
@@ -81,6 +84,7 @@ const countries = [
   { name: 'EE +372', code: '+372' },
 ];
 
+// Decoupled authentication
 const decoupledAuth = async (userId, personalCode, phoneNumber) => {
   try {
     const body = {
@@ -89,9 +93,7 @@ const decoupledAuth = async (userId, personalCode, phoneNumber) => {
         [personalCode ? 'personalCode' : 'phoneNumber']: personalCode || phoneNumber
     }
 
-    const { data } = await axios.post('http://localhost:3000/api/app/auth/decoupled/start', body)
-
-    store.authData = data;
+    await store.initiateDecoupledAuth(body);
 
     return;
   } catch (error) {
@@ -100,6 +102,7 @@ const decoupledAuth = async (userId, personalCode, phoneNumber) => {
   }
 }
 
+// Checks if input values are valid
 const submitForm = async () => {
   if (!userId.value || (!personalCode.value && !phoneNumber.value)) {
     toast.warning('Please enter all values.');
@@ -140,6 +143,13 @@ const submitForm = async () => {
       await decoupledAuth(userId.value, null, fullPhoneNumber);
     }
 };
+
+onMounted(() => {
+  if (!Cookies.get('token')) {
+    router.push('/')
+  }
+})
+
 </script>
 
 <style scoped>
