@@ -153,11 +153,16 @@ const createAllAccountConsent = async () => {
 
     const consent = await consentStore.createConsent(token, access)
 
+
+    if (consent.consentStatus === "received") {
+      logout()
+    }
+
     allAccountToken = consent.token
 
     return;
   } catch (error) {
-    toast.error(error.response.data[0].text || 'An error occurred')
+    toast.error(error?.response?.data[0].text || 'An error occurred')
   }
 }
 

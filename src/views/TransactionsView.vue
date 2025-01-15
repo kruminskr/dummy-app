@@ -68,7 +68,7 @@
             <!-- Transaction information -->
             <tr class="is-clickable" @click="toggleDropdown(transaction.transactionId)">
               <td>
-                {{ transaction.transactionDate }}
+                {{ transaction.valueDate }}
               </td>
               <td class="has-text-centered" :class="{'has-text-danger': transaction.transactionAmount.amount < 0, 'has-text-success': transaction.transactionAmount.amount > 0}">
               {{ transaction.transactionAmount.amount }}

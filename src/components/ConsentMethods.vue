@@ -115,7 +115,7 @@ const decopoledConesnt = async (iban, accountId) => {
 
     return;
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
     toast.error(error?.response?.data[0].text || error.message)
   }
 }

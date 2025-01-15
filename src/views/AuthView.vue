@@ -55,10 +55,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useToast } from "vue-toastification";
 import { useRouter  } from 'vue-router'
-import Cookies from 'js-cookie'
 
 import AuthStatus from '../components/AuthStatus.vue';
 
@@ -143,13 +142,6 @@ const submitForm = async () => {
       await decoupledAuth(userId.value, null, fullPhoneNumber);
     }
 };
-
-onMounted(() => {
-  if (!Cookies.get('token')) {
-    router.push('/')
-  }
-})
-
 </script>
 
 <style scoped>
