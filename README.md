@@ -23,7 +23,7 @@ The frontend provides:
 
 ---
  ## Releated projects
-- [Financial Management System - frontend](https://github.com/kruminskr/dummy-sys)
+- [Financial Management System - backend](https://github.com/kruminskr/dummy-sys)
 
 ---
 ## Screenshots
