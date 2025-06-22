@@ -1,4 +1,4 @@
-# 💰 Financial Management System – backend
+# 💰 Financial Management System – frontend
 
 This project is the frontend component of a university project. The focus is on building a clean, responsive, and user-friendly interface for managing and visualizing financial data retrieved securely from Swedbank via the backend API.
 
@@ -27,6 +27,6 @@ The frontend provides:
 
 ---
 ## Screenshots
-![Authentication](\src\assets\screenshots\auth.png)
-![Account information](\src\assets\screenshots\accountInfo.png)
-![Account transactions](\src\assets\screenshots\transactions.png)
+![Authentication](/src/assets/screenshotsauth.png)
+![Account information](/src/assets/screenshots/accountInfo.png)
+![Account transactions](/src/assets/screenshots/transactions.png)
