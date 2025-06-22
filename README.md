@@ -28,20 +28,14 @@ The frontend provides:
 ---
 ## Screenshots
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="./src/assets/screenshots/auth.png" alt="Authentication" width="250" style="border-radius: 8px;" /><br/>
-      Authentication Screen
-    </td>
-    <td align="center">
-      <img src="./src/assets/screenshots/accountInfo.png" alt="Account Information" width="250" style="border-radius: 8px;" /><br/>
-      Account Information
-    </td>
-    <td align="center">
-      <img src="./src/assets/screenshots/transactions.png" alt="Account Transactions" width="250" style="border-radius: 8px;" /><br/>
-      Account Transactions
-    </td>
-  </tr>
-</table>
+## Screenshots
+
+**Authentication Screen**  
+![Authentication](./src/assets/screenshots/auth.png)  
+
+**Account Information**  
+![Account Information](./src/assets/screenshots/accountInfo.png)  
+
+**Account Transactions**  
+![Account Transactions](./src/assets/screenshots/transactions.png) 
 
