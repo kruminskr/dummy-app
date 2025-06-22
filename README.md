@@ -28,17 +28,20 @@ The frontend provides:
 ---
 ## Screenshots
 
-<div style="display: flex; gap: 20px; flex-wrap: wrap;">
-  <div style="flex: 1; min-width: 200px;">
-    <img src="/src/assets/screenshots/auth.png" alt="Authentication" style="width: 100%; border-radius: 8px;"/>
-    <p style="text-align: center;">Authentication Screen</p>
-  </div>
-  <div style="flex: 1; min-width: 200px;">
-    <img src="/src/assets/screenshots/accountInfo.png" alt="Account Information" style="width: 100%; border-radius: 8px;"/>
-    <p style="text-align: center;">Account Information</p>
-  </div>
-  <div style="flex: 1; min-width: 200px;">
-    <img src="/src/assets/screenshots/transactions.png" alt="Account Transactions" style="width: 100%; border-radius: 8px;"/>
-    <p style="text-align: center;">Account Transactions</p>
-  </div>
-</div>
+<table>
+  <tr>
+    <td align="center">
+      <img src="./src/assets/screenshots/auth.png" alt="Authentication" width="250" style="border-radius: 8px;" /><br/>
+      Authentication Screen
+    </td>
+    <td align="center">
+      <img src="./src/assets/screenshots/accountInfo.png" alt="Account Information" width="250" style="border-radius: 8px;" /><br/>
+      Account Information
+    </td>
+    <td align="center">
+      <img src="./src/assets/screenshots/transactions.png" alt="Account Transactions" width="250" style="border-radius: 8px;" /><br/>
+      Account Transactions
+    </td>
+  </tr>
+</table>
+
