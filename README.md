@@ -28,8 +28,6 @@ The frontend provides:
 ---
 ## Screenshots
 
-## Screenshots
-
 **Authentication Screen**  
 ![Authentication](./src/assets/screenshots/auth.png)  
 
